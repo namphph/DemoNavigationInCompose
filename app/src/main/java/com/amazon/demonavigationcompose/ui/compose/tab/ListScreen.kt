@@ -11,10 +11,10 @@ import androidx.compose.ui.res.stringResource
 import com.amazon.demonavigationcompose.R
 
 @Composable
-fun ListScreen() {
+fun ListScreen(title: Int) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(
-            text = stringResource(id = R.string.list),
+            text = stringResource(id = title),
             style = typography.titleLarge
         )
     }

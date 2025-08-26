@@ -8,13 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.amazon.demonavigationcompose.R
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(title: Int) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(
-            text = stringResource(id = R.string.profile),
+            text = stringResource(id = title),
             style = typography.titleLarge,
         )
     }

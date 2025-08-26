@@ -1,7 +1,11 @@
 package com.amazon.demonavigationcompose.ui.compose
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -12,28 +16,34 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
-import com.amazon.demonavigationcompose.nav.NavTitle
+import com.amazon.demonavigationcompose.nav.MainDestinations
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
-    val navItems = listOf(NavTitle.HOME, NavTitle.SEARCH, NavTitle.LIST, NavTitle.PROFILE)
+    val navItems = listOf(
+        MainDestinations.Home,
+        MainDestinations.Search,
+        MainDestinations.List,
+        MainDestinations.Profile
+    )
     var selectedItem by rememberSaveable { mutableStateOf(0) }
     NavigationBar {
         navItems.forEachIndexed { index, item ->
+            val icon = when(item){
+                MainDestinations.Home -> Icons.Filled.Home
+                MainDestinations.Search -> Icons.Filled.Search
+                MainDestinations.List -> Icons.AutoMirrored.Filled.List
+                else -> Icons.Filled.Person
+            }
             NavigationBarItem(
                 alwaysShowLabel = true,
-                icon = { Icon(Icons.Default.Home, contentDescription = item) },
-                label = { Text(item) },
+                icon = { Icon(icon, contentDescription = stringResource(item.titleRes)) },
+                label = { Text(stringResource(item.titleRes)) },
                 selected = selectedItem == index ,
                 onClick = {
                     selectedItem = index
-                    navController.navigate(item) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) { saveState = true }
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    navController.navigate(item)
                 }
             )
         }
